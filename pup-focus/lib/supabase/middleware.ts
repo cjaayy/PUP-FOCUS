@@ -1,9 +1,15 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
-import { env } from "@/config/env";
+import { getPublicEnvSafe } from "@/config/env";
 
 export async function updateSupabaseSession(request: NextRequest) {
   const response = NextResponse.next({ request });
+  const env = getPublicEnvSafe();
+
+  // Allow local boot even before env variables are configured.
+  if (!env) {
+    return response;
+  }
 
   const supabase = createServerClient(
     env.NEXT_PUBLIC_SUPABASE_URL,

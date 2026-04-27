@@ -1,13 +1,34 @@
 import { z } from "zod";
 
-const envSchema = z.object({
+const publicEnvSchema = z.object({
   NEXT_PUBLIC_SUPABASE_URL: z.url(),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
+});
+
+const serviceRoleSchema = z.object({
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
 });
 
-export const env = envSchema.parse({
-  NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-  SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
-});
+type PublicEnv = z.infer<typeof publicEnvSchema>;
+
+function readPublicEnv() {
+  return {
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  };
+}
+
+export function getPublicEnv(): PublicEnv {
+  return publicEnvSchema.parse(readPublicEnv());
+}
+
+export function getPublicEnvSafe(): PublicEnv | null {
+  const parsed = publicEnvSchema.safeParse(readPublicEnv());
+  return parsed.success ? parsed.data : null;
+}
+
+export function getServiceRoleKey(): string {
+  return serviceRoleSchema.parse({
+    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+  }).SUPABASE_SERVICE_ROLE_KEY;
+}
