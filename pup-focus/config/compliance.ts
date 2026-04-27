@@ -1,0 +1,20 @@
+export const REQUIREMENT_CODE = {
+  GRADE_SHEET: "grade_sheet",
+  ENHANCED_SYLLABUS: "enhanced_syllabus",
+  CLASS_ORIENTATION: "class_orientation",
+  MIDTERM_PACKAGE: "midterm_package",
+  FINAL_PACKAGE: "final_package",
+  CLASS_RECORDS: "class_records",
+} as const;
+
+export type RequirementCode =
+  (typeof REQUIREMENT_CODE)[keyof typeof REQUIREMENT_CODE];
+
+export const DEFAULT_REQUIREMENTS: RequirementCode[] = [
+  REQUIREMENT_CODE.GRADE_SHEET,
+  REQUIREMENT_CODE.ENHANCED_SYLLABUS,
+  REQUIREMENT_CODE.CLASS_ORIENTATION,
+  REQUIREMENT_CODE.MIDTERM_PACKAGE,
+  REQUIREMENT_CODE.FINAL_PACKAGE,
+  REQUIREMENT_CODE.CLASS_RECORDS,
+];
