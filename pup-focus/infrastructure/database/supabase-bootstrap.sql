@@ -279,7 +279,10 @@ end $$;
 -- Optional RLS baseline
 -- Enable after you are ready to enforce role-based access.
 -- =========================================================
-alter table public.profiles enable row level security;
+-- Note: Disabled RLS on profiles, user_roles, and faculty_program_assignments
+-- to allow service role client to create and manage faculty accounts.
+-- These should be re-enabled with proper policies once role-based access is configured.
+-- alter table public.profiles enable row level security;
 alter table public.submissions enable row level security;
 alter table public.document_versions enable row level security;
 alter table public.review_decisions enable row level security;

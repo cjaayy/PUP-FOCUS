@@ -16,6 +16,11 @@ export const metadata: Metadata = {
   title: "PUP FOCUS",
   description:
     "Faculty Online Compliance and Uploading System for Efficient Academic Document Management",
+  icons: {
+    icon: "/icons/pngkey.com-phillies-logo-png-528919.png",
+    shortcut: "/icons/pngkey.com-phillies-logo-png-528919.png",
+    apple: "/icons/pngkey.com-phillies-logo-png-528919.png",
+  },
 };
 
 export default function RootLayout({
@@ -28,7 +33,9 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--foreground)]">
+        {children}
+      </body>
     </html>
   );
 }
